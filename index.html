@@ -53,7 +53,7 @@
  
  	<h1>PatrickBoard</h1>
 	<div class="row">
-		<div class="col"><button onclick="playSound('sounds/patrick_no.m4a')">No</button></div>
+		<div class="col"><button onclick="playSound('sounds/patrick_no.m4a')">No</button></div>	
 		<div class="col">2</div>
 		<div class="col">c3ol</div>
 	</div>
@@ -61,8 +61,16 @@
 		window.AudioContext = window.AudioContext || window.webkitAudioContext;
 		let context = new AudioContext();
 
+		let cache = {};
+
 		function playSound(audio_id) {
-			let audio = new Audio(audio_id);
+			let audio = undefined;
+			if (cache[audio_id]) {
+				audio = cache[audio_id].cloneNode();
+			} else {
+				audio = new Audio(audio_id);
+				cache[audio_id] = audio;
+			}
 			audio.play();
 		}
 	</script>
